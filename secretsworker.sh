@@ -23,6 +23,7 @@ dodecrypt() {
 doupdate() {
     is_safefile
     git_msg
+    kms_decrypt $SAFEFILE > $UNSAFEFILE
     KEY=$(echo ${SECRET} | cut -d "=" -f1)
     VALUE=$(echo ${SECRET} | cut -d "=" -f2)
     MATCHCOUNT=$(cd $UNSAFE; grep -wc ^$KEY $FILE)
@@ -32,7 +33,6 @@ doupdate() {
         printf "This secret does not exist. Use command 'make add-secret...' to add this secret"
         ;;
     1)
-        kms_decrypt $SAFEFILE > $UNSAFEFILE
         sed -i '/^'"${KEY}"'\=/s/=.*$/='"${VALUE} ${COMMENT}"'/' $UNSAFEFILE
         kms_encrypt $UNSAFEFILE > $SAFEFILE
         printf "Secret(s) added/updated\n"
@@ -121,13 +121,13 @@ dodecryptfile() {
 }
 
 main() {
+    awscli_check
     COMMAND=$1
     TOPIC=$2
     ENV=$3
     FILE=${ENV}-${TOPIC}
     SAFEFILE=$SAFE/$FILE.enc
     UNSAFEFILE=$UNSAFE/$FILE
-    awscli_check
 
     case ${COMMAND} in
     "decrypt")
