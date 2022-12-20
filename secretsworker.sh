@@ -2,7 +2,7 @@
 
 PROFILE=dp-svc-user
 KMSKEYID=399e2a2d-44f9-4e3c-a13f-39422ce06798
-CLSTIME=5
+CLSTIME=8
 SAFE=./safe
 UNSAFE=./unsafe
 FILE=''
