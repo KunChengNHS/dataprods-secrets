@@ -2,7 +2,7 @@
 
 PROFILE=dp-svc-user
 KMSKEYID=399e2a2d-44f9-4e3c-a13f-39422ce06798
-CLSTIME=8
+CLSTIME=5
 SAFE=./safe
 UNSAFE=./unsafe
 FILE=''
@@ -125,6 +125,7 @@ main() {
     COMMAND=$1
     TOPIC=$2
     ENV=$3
+    CLS=$4
     FILE=${ENV}-${TOPIC}
     SAFEFILE=$SAFE/$FILE.enc
     UNSAFEFILE=$UNSAFE/$FILE
@@ -133,12 +134,12 @@ main() {
     "decrypt")
         dodecrypt;;
     "encrypt")
-        SECRET=$4
-        COMMENT="### ${@:5}"
+        SECRET=$5
+        COMMENT="### ${@:6}"
         doencrypt;;
     "update")
         SECRET=$4
-        COMMENT="### ${@:5}"
+        COMMENT="### ${@:6}"
         doupdate;;
     "list-topics")
         dolisttopicsdecrypt;;
@@ -193,8 +194,11 @@ error_multiplematch() {
 }
 
 clrscreen() {
-    sleep $CLSTIME
-    tput reset
+    if [[ ! "no" =~ "$CLS" ]]; then
+        sleep $CLSTIME
+        tput reset
+    fi
+
 }
 
 main $@

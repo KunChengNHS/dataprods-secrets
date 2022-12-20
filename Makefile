@@ -3,6 +3,7 @@
 #
 
 env ?= live
+cls ?= yes
 default:
 	@./secretsworker.sh usage
 
@@ -15,23 +16,23 @@ __check_defined = \
 
 show-secret: 
 	$(call check_defined, topic)
-	@./secretsworker.sh decrypt $(topic) $(env)
+	@./secretsworker.sh decrypt $(topic) $(env) $(cls)
 
 add-secret:
 	$(call check_defined, topic secret)
-	@./secretsworker.sh encrypt $(topic) $(env) $(secret) $(comment)
+	@./secretsworker.sh encrypt $(topic) $(env) $(cls) $(secret) $(comment)
 
 update-secret:
 	$(call check_defined, topic secret)
-	@./secretsworker.sh update $(topic) $(env) $(secret) $(comment)
+	@./secretsworker.sh update $(topic) $(env) $(cls) $(secret) $(comment)
 
 list-topics:
-	@./secretsworker.sh list-topics list-topics $(env)
+	@./secretsworker.sh list-topics list-topics $(env) $(cls)
 
 encrypt-file:
 	$(call check_defined, topic)
-	@./secretsworker.sh encrypt-file $(topic) $(env)
+	@./secretsworker.sh encrypt-file $(topic) $(env) $(cls)
 
 decrypt-file:
-	$(call check_defined, topic)
+	$(call check_defined, topic) $(cls)
 	@./secretsworker.sh decrypt-file $(topic) $(env)
