@@ -34,5 +34,5 @@ encrypt-file:
 	@./secretsworker.sh encrypt-file $(topic) $(env) $(cls)
 
 decrypt-file:
-	$(call check_defined, topic) $(cls)
+	$(call check_defined, topic)
 	@./secretsworker.sh decrypt-file $(topic) $(env)
