@@ -138,7 +138,7 @@ main() {
         COMMENT="### ${@:6}"
         doencrypt;;
     "update")
-        SECRET=$4
+        SECRET=$5
         COMMENT="### ${@:6}"
         doupdate;;
     "list-topics")
